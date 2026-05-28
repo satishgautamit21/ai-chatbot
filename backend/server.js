@@ -53,40 +53,90 @@ app.get("/chat/:id", (req, res) => {
 });
 
 app.post("/chat", async (req, res) => {
-    const { chatId, message } = req.body;
+    try {
+        const { chatId, message } = req.body;
 
-    const filePath = `./chats/${chatId}.json`;
+        const filePath = `./chats/${chatId}.json`;
 
-    const chat = JSON.parse(
-        fs.readFileSync(filePath, "utf-8")
-    );
+        const chat = JSON.parse(
+            fs.readFileSync(filePath, "utf-8")
+        );
 
-    chat.messages.push({
-        role: "user",
-        content: message,
-    });
-
-    const completion =
-        await client.chat.completions.create({
-            model: "openai/gpt-4o-mini",
-            messages: chat.messages,
+        chat.messages.push({
+            role: "user",
+            content: message,
         });
 
-    const reply =
-        completion.choices[0].message.content;
+        const completion =
+            await client.chat.completions.create({
+                model: "openai/gpt-4o-mini",
+                messages: chat.messages,
+            });
 
-    chat.messages.push({
-        role: "assistant",
-        content: reply,
-    });
+        const reply =
+            completion.choices[0].message.content;
 
-    fs.writeFileSync(
-        filePath,
-        JSON.stringify(chat, null, 2)
-    );
+        // Usage metadata
+        const usage = completion.usage;
 
-    res.json({ reply });
+        // Model context window
+        // gpt-4o-mini supports large context
+        const MAX_CONTEXT_TOKENS = 128000;
+
+        const totalTokens =
+            usage?.total_tokens || 0;
+
+        const remainingTokens =
+            MAX_CONTEXT_TOKENS - totalTokens;
+
+        chat.messages.push({
+            role: "assistant",
+            content: reply,
+        });
+
+        // Store latest token stats
+        chat.lastUsage = {
+            promptTokens:
+                usage?.prompt_tokens || 0,
+
+            completionTokens:
+                usage?.completion_tokens || 0,
+
+            totalTokens,
+
+            remainingTokens,
+        };
+
+        fs.writeFileSync(
+            filePath,
+            JSON.stringify(chat, null, 2)
+        );
+
+        res.json({
+            reply,
+
+            usage: {
+                promptTokens:
+                    usage?.prompt_tokens || 0,
+
+                completionTokens:
+                    usage?.completion_tokens || 0,
+
+                totalTokens,
+
+                remainingTokens,
+            },
+        });
+
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            error: "Failed to process chat",
+        });
+    }
 });
+
 
 app.post("/streamChat", async (req, res) => {
     try {

@@ -24,6 +24,20 @@
     {
       "role": "assistant",
       "content": "`useEffect` is a React hook that allows you to perform side effects in functional components, such as fetching data, subscriptions, or DOM manipulation. It runs after rendering and can optionally clean up resources. It takes two arguments: an effect function and a dependency array that controls when the effect runs.\n\n### Example:\n\n```javascript\nuseEffect(() => {\n  // Fetch data or perform side effect\n  return () => {\n    // Cleanup if necessary\n  };\n}, [dependencies]); // Runs when dependencies change\n```\n\nUse `useEffect` to manage side effects efficiently in your components."
+    },
+    {
+      "role": "user",
+      "content": "hello world"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello! How can I assist you today? If you have questions or need information about a topic, feel free to ask!"
     }
-  ]
+  ],
+  "lastUsage": {
+    "promptTokens": 1087,
+    "completionTokens": 26,
+    "totalTokens": 1113,
+    "remainingTokens": 126887
+  }
 }
