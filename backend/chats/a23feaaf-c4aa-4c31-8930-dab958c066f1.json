@@ -32,12 +32,20 @@
     {
       "role": "assistant",
       "content": "Hello! How can I assist you today? If you have questions or need information about a topic, feel free to ask!"
+    },
+    {
+      "role": "user",
+      "content": "vues j"
+    },
+    {
+      "role": "assistant",
+      "content": "**Vue.js 3 – Quick “Hello World”**\n\nVue 3 is a progressive, component‑based JavaScript framework for building UI.  \nBelow is a plain‑vanilla “Hello World” example in three common ways:\n\n---\n\n## 1. Using CDN (no build step)\n\n```html\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>Vue 3 Hello World</title>\n  <script src=\"https://unpkg.com/vue@3\"></script>\n</head>\n<body>\n  <div id=\"app\">{{ message }}</div>\n\n  <script>\n    Vue.createApp({\n      data() {\n        return { message: 'Hello World' }\n      }\n    }).mount('#app')\n  </script>\n</body>\n</html>\n```\n\n- *Why?* Great for demos, quick prototypes or learning.\n\n---\n\n## 2. Single‑File Component (`.vue`) – `vite`\n\n```bash\nnpm create vite@latest hello-vue -- --template vue\ncd hello-vue\nnpm install\nnpm run dev\n```\n\n`src/components/HelloWorld.vue`\n\n```vue\n<template>\n  <h1>{{ msg }}</h1>\n</template>\n\n<script setup>\nconst msg = 'Hello World'\n</script>\n\n<style scoped>\nh1 { color: #42b983; }\n</style>\n```\n\n- *Why?* Modern dev setup, HMR, bundler opt‑in.\n\n---\n\n## 3. Using **Vue CLI** (Vue 2 or 3)\n\n```bash\nnpm install -g @vue/cli\nvue create my-vue-app   # choose “Vue 3” preset\ncd my-vue-app\nnpm run serve\n```\n\n`src/App.vue`\n\n```vue\n<template>\n  <div id=\"app\">\n    <h1>{{ greeting }}</h1>\n  </div>\n</template>\n\n<script>\nexport default {\n  name: 'App',\n  data() {\n    return { greeting: 'Hello World' }\n  }\n}\n</script>\n```\n\n- *Why?* Full‑featured CLI, plugins, PWA, Typescript support.\n\n---\n\n### Key Concepts Recap\n\n| Feature | Vue 3 |\n|---------|-------|\n| **Reactivity** | Composition API (`reactive`, `ref`) & Options API |\n| **Component** | `<script setup>` or classic `export default` |\n| **Mounting** | `Vue.createApp(App).mount(el)` |\n| **Templates** | Declarative, interpolations (`{{ }}`) |\n| **CLI** | `vue create` – scaffolds project for you |\n\nThat’s the minimal “Hello World” you can run in Vue 3! Feel free to tweak the style, add interactivity, or explore more advanced features next."
     }
   ],
   "lastUsage": {
-    "promptTokens": 1087,
-    "completionTokens": 26,
-    "totalTokens": 1113,
-    "remainingTokens": 126887
+    "promptTokens": 1191,
+    "completionTokens": 619,
+    "totalTokens": 1810,
+    "remainingTokens": 126190
   }
 }
