@@ -69,7 +69,7 @@ app.post("/chat", async (req, res) => {
 
         const completion =
             await client.chat.completions.create({
-                model: "openai/gpt-4o-mini",
+                model: "openai/gpt-oss-20b:free",
                 messages: chat.messages,
             });
 
